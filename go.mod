@@ -1,4 +1,4 @@
-module github.com/edista/go/microservice
+module github.com/edista/go-microservice
 
 go 1.17
 

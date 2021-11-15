@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 
+	v1 "github.com/edista/go-microservice/src/api/v1"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -16,7 +17,9 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// Routes
-	e.GET("/", hello)
+	e.GET("/hi", hello)
+
+	v1.NewApi(e)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":1323"))
