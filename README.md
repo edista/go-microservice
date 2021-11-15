@@ -4,11 +4,13 @@
 
 ### Folder Structure
 
-microservice
-    - src
-        - api
-        - services
-        - models
-        - main.go
-    - engine
-    - go.mod
+```bash
+.
+├── go.mod
+├── README.md
+└── src
+    ├── api
+    ├── main.go
+    ├── models
+    └── services
+```
