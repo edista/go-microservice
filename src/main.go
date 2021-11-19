@@ -28,7 +28,10 @@ func main() {
 	// Health Check
 	app.GET("/c/health", hello)
 
-	db := database.NewDatabase()
+	db, err := database.NewDatabase(config.Database.Uri)
+	if err != nil {
+		return
+	}
 	engine := engine.NewEngine(app, db)
 	service := service.NewService(engine, config)
 	v1.NewApi(app, service)
