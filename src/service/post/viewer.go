@@ -2,7 +2,7 @@ package post
 
 import "github.com/edista/go-microservice/src/model"
 
-func ListPost() []model.Post {
+func (s *PostService) ListPost() []model.Post {
 	return []model.Post{
 		{
 			ID:        1,

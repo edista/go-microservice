@@ -2,7 +2,10 @@ module github.com/edista/go-microservice
 
 go 1.17
 
-require github.com/labstack/echo/v4 v4.6.1
+require (
+	github.com/labstack/echo/v4 v4.6.1
+	gopkg.in/yaml.v2 v2.2.2
+)
 
 require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect

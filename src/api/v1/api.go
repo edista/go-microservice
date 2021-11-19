@@ -1,20 +1,27 @@
 package v1
 
-import "github.com/labstack/echo/v4"
+import (
+	"github.com/edista/go-microservice/src/service"
+	"github.com/labstack/echo/v4"
+)
 
 type Api struct {
 	version string
-	e       *echo.Echo
+	app     *echo.Echo
+	service *service.Service
 }
 
-func NewApi(e *echo.Echo) {
+func NewApi(app *echo.Echo, service *service.Service) {
 	api := Api{
 		version: "v1",
-		e:       e,
+		app:     app,
+		service: service,
 	}
-	NewPostApi(api)
+
+	NewPostApi(api, service.PostService)
+	NewUserApi(api)
 }
 
 func (api *Api) CreateGroup(groupName string) *echo.Group {
-	return api.e.Group("/api/" + api.version + "/" + groupName)
+	return api.app.Group("/api/" + api.version + "/" + groupName)
 }

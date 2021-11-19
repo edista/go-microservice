@@ -7,30 +7,34 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type PostsApi struct {
+type PostHandler struct {
+	postService post.PostService
 }
 
-func NewPostApi(api Api) {
-	group := api.CreateGroup("posts")
-	group.GET("", listPost)
-	group.GET("/:id", getPost)
-	group.POST("", createPost)
-	group.PUT("/:id", updatePost)
+func NewPostApi(api Api, postService post.PostService) {
+	h := PostHandler{
+		postService: postService,
+	}
+	g := api.CreateGroup("/posts")
+	g.GET("", h.listPost)
+	g.GET("/:id", h.getPost)
+	g.POST("", h.createPost)
+	g.PUT("/:id", h.updatePost)
 }
 
-func listPost(c echo.Context) error {
-	u := post.ListPost()
+func (h *PostHandler) listPost(c echo.Context) error {
+	u := h.postService.ListPost()
 	return c.JSON(http.StatusOK, u)
 }
 
-func getPost(c echo.Context) error {
+func (h *PostHandler) getPost(c echo.Context) error {
 	return nil
 }
 
-func createPost(c echo.Context) error {
+func (h *PostHandler) createPost(c echo.Context) error {
 	return nil
 }
 
-func updatePost(c echo.Context) error {
+func (h *PostHandler) updatePost(c echo.Context) error {
 	return nil
 }

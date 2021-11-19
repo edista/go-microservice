@@ -3,26 +3,38 @@ package main
 import (
 	"net/http"
 
+	engine "github.com/edista/go-microservice/engine"
+	"github.com/edista/go-microservice/engine/src/database"
 	v1 "github.com/edista/go-microservice/src/api/v1"
+	"github.com/edista/go-microservice/src/config"
+	"github.com/edista/go-microservice/src/service"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
 	// Echo instance
-	e := echo.New()
+	app := echo.New()
+
+	config, err := config.NewConfig()
+	if err != nil {
+
+	}
 
 	// Middleware
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
+	app.Use(middleware.Logger())
+	app.Use(middleware.Recover())
 
-	// Routes
-	e.GET("/hi", hello)
+	// Health Check
+	app.GET("/c/health", hello)
 
-	v1.NewApi(e)
+	db := database.NewDatabase()
+	engine := engine.NewEngine(app, db)
+	service := service.NewService(engine, config)
+	v1.NewApi(app, service)
 
 	// Start server
-	e.Logger.Fatal(e.Start(":1323"))
+	app.Logger.Fatal(app.Start(":1323"))
 }
 
 // Handler
